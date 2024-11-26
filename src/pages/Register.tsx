@@ -1,20 +1,112 @@
 import { CSSProperties } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
-export default function RegisterPage() {
+import axios from "axios";
+import { useForm } from "react-hook-form";
+
+type FormValues = {
+  username: string;
+  email: string;
+  password: string;
+  apiError?: {
+    message: string;
+  };
+};
+
+export default function Register() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<FormValues>({ mode: "onSubmit" });
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/register`,
+        data
+      );
+      console.log(response.status);
+      if (response.status === 201) {
+        console.log("Succesvol geregistreerd");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("root.apiError", {
+        message: "Er is een netwerkfout opgetreden. Probeer het later opnieuw.",
+      });
+    }
+  };
+
   return (
-    <>
-      <h1>Registerpage</h1>
+    <div style={formstyles}>
+      <h1>Registeren</h1>
+      <div>
+        <div>
+          {errors.root?.apiError && <p>{errors.root?.apiError.message}</p>}
 
-      <form action="somewhere">
-        <div style={formstyles}>
-          <input type="text" name="username" placeholder="Username123" />
-          <input type="password" name="password" />
+          {isSubmitting && <span>Bezig met registreren...</span>}
         </div>
-      </form>
+      </div>
 
-      <Link to={"/home"}>Back to Home</Link>
-    </>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col space-y-4"
+      >
+        <input
+          type="text"
+          id="username"
+          {...register("username", {
+            required: { value: true, message: "Email is verplicht" },
+          })}
+          placeholder="Naam"
+        />
+
+        <div>{errors.username && <span>Naam is verplicht</span>}</div>
+        <input
+          type="email"
+          id="email"
+          {...register("email", {
+            required: { value: true, message: "Email is verplicht" },
+          })}
+          placeholder="E-mail"
+        />
+
+        <div>
+          {errors.email && (
+            <span className="text-red-500">Email is verplicht</span>
+          )}
+        </div>
+        <input
+          autoComplete="new-password"
+          id="password"
+          type="password"
+          {...register("password", {
+            required: { value: true, message: "wachtwoord is verplicht" },
+          })}
+          placeholder="Wachtwoord"
+        />
+        <div>{errors.password && <span>Wachtwoord is verplicht</span>}</div>
+        <button
+          type="submit"
+          className="text-lg text-white bg-blue-500 w-72 h-14 rounded-custom hover:bg-blue-600"
+        >
+          Registeer
+        </button>
+      </form>
+      <div>
+        Al een account?{" "}
+        <Link to="/login">
+          <span className="text-blue-500 cursor-pointer hover:underline">
+            Log hier in
+          </span>
+        </Link>
+      </div>
+    </div>
   );
 }
 
