@@ -1,9 +1,10 @@
 import { Link } from "react-router";
+import H1 from "../ui/H1";
 
 export default function HomePage() {
   return (
     <>
-      <h1 className="text-red-800">Homepage</h1>
+      <H1>Homepage</H1>
       <Link to="/register">Signup/Register</Link>
     </>
   );

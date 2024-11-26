@@ -3,15 +3,7 @@ import { Link, useNavigate } from "react-router";
 
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
-type FormValues = {
-  username: string;
-  email: string;
-  password: string;
-  apiError?: {
-    message: string;
-  };
-};
+import H1 from "../ui/H1";
 
 export default function Register() {
   const {
@@ -44,7 +36,7 @@ export default function Register() {
 
   return (
     <div style={formstyles}>
-      <h1>Registeren</h1>
+      <H1>Registeren</H1>
       <div>
         <div>
           {errors.root?.apiError && <p>{errors.root?.apiError.message}</p>}
@@ -58,6 +50,7 @@ export default function Register() {
         className="flex flex-col space-y-4"
       >
         <input
+          className="border"
           type="text"
           id="username"
           {...register("username", {
@@ -68,6 +61,7 @@ export default function Register() {
 
         <div>{errors.username && <span>Naam is verplicht</span>}</div>
         <input
+          className="border"
           type="email"
           id="email"
           {...register("email", {
@@ -81,7 +75,9 @@ export default function Register() {
             <span className="text-red-500">Email is verplicht</span>
           )}
         </div>
+
         <input
+          className="border"
           autoComplete="new-password"
           id="password"
           type="password"
@@ -115,4 +111,13 @@ const formstyles: CSSProperties = {
   flexDirection: "column",
   gap: "1rem",
   margin: "1rem",
+};
+
+type FormValues = {
+  username: string;
+  email: string;
+  password: string;
+  apiError?: {
+    message: string;
+  };
 };
