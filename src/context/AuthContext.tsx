@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 interface AuthContextType {
   token: string | null;
@@ -84,3 +85,22 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export function useRequireAuth(redirectUrl = "/login") {
+  // This hook can be viewed as a middleware that checks if the user is authenticated
+  const navigate = useNavigate();
+  const { getToken, getExpiresIn } = useAuth();
+
+  useEffect(() => {
+    const expiresIn = getExpiresIn();
+    const isTokenExpired = expiresIn
+      ? new Date().getTime() > new Date(Number(expiresIn)).getTime()
+      : true;
+    const token = getToken();
+
+    if (!token || isTokenExpired) {
+      navigate(redirectUrl);
+      console.log("Redirecting to login not authenticated");
+    }
+  }, [getToken, navigate, redirectUrl, getExpiresIn]);
+}
