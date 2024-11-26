@@ -1,7 +1,6 @@
 # React JWT Auth Example
 This project serves an example to incorporate jwt token authentication in a React app
 
-# Manual to integrate the auth routes
 ![alt text](public/auth-clientside.png)
 
 In the image above, you can see a simplified view of the authentication process.
