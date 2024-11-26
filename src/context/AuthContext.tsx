@@ -2,15 +2,18 @@ import React, { useState } from "react";
 
 interface AuthContextType {
   token: string | null;
-  //   setToken: React.Dispatch<React.SetStateAction<string | null>>;
   expiresIn: number | null;
-  //   setExpiresIn: React.Dispatch<React.SetStateAction<number | null>>;
-  getExpiresIn: () => string | null;
   getToken: () => string | null;
   getTokenBearer: () => string;
   authToken: (token: string) => void;
-  authExpiresIn: (expiresIn: number) => void;
   Logout: () => void;
+  /*
+  	// Expires in not implemented in backend
+     setToken: React.Dispatch<React.SetStateAction<string | null>>;
+     setExpiresIn: React.Dispatch<React.SetStateAction<number | null>>; Todo: implement experes in with jwt lib
+     getExpiresIn: () => string | null;
+     authExpiresIn: (expiresIn: number) => void;
+  */
 }
 
 const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
@@ -26,11 +29,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setToken(token);
   };
 
-  const authExpiresIn = (expiresIn: number) => {
-    const expiresInMs = new Date().getTime() + expiresIn * 1000;
-    localStorage.setItem("expiresIn", expiresInMs.toString());
-    setExpiresIn(expiresInMs);
-  };
   const getToken = () => {
     const token = localStorage.getItem("token");
     setToken(token);
@@ -39,6 +37,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getTokenBearer = () => {
     return token ? `Bearer ${token}` : "";
+  };
+
+  // TODO: Reimplmement expiry with jwt lib
+  const authExpiresIn = (expiresIn: number) => {
+    const expiresInMs = new Date().getTime() + expiresIn * 1000;
+    localStorage.setItem("expiresIn", expiresInMs.toString());
+    setExpiresIn(expiresInMs);
   };
 
   const getExpiresIn = () => {
@@ -59,12 +64,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         token,
         expiresIn,
-        getExpiresIn,
         getToken,
         authToken,
-        authExpiresIn,
         Logout,
         getTokenBearer,
+        // authExpiresIn,// not implemented in backend
+        // getExpiresIn, // not implemented in backend
       }}
     >
       {children}
