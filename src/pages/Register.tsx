@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 import { Link } from "react-router";
 
-function RegisterPage() {
+export default function RegisterPage() {
   return (
     <>
       <h1>Registerpage</h1>
@@ -24,4 +24,3 @@ const formstyles: CSSProperties = {
   gap: "1rem",
   margin: "1rem",
 };
-export default RegisterPage;

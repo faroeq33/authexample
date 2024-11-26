@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-function HomePage() {
+export default function HomePage() {
   return (
     <>
       <h1>Homepage</h1>
@@ -8,5 +8,3 @@ function HomePage() {
     </>
   );
 }
-
-export default HomePage;

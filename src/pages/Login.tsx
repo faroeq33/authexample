@@ -12,7 +12,7 @@ type FormValues = {
   };
 };
 
-function Login() {
+export default function Login() {
   const {
     register,
     handleSubmit,
@@ -114,9 +114,3 @@ function Login() {
     </div>
   );
 }
-
-// export default Login;function LoginPage() {
-//   return <div>Loginpage</div>;
-// }
-
-export default Login;

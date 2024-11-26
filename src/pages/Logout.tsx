@@ -1,5 +1,3 @@
-function LogoutPage() {
+export default function LogoutPage() {
   return <div>loginpage</div>;
 }
-
-export default LogoutPage;

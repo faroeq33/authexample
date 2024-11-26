@@ -4,7 +4,7 @@ import RegisterPage from "../pages/Register";
 import LoginPage from "../pages/Login";
 import { AuthProvider } from "../context/AuthContext";
 
-function CustomRouter() {
+export default function CustomRouter() {
   return (
     <>
       <AuthProvider>
@@ -21,5 +21,3 @@ function CustomRouter() {
     </>
   );
 }
-
-export default CustomRouter;
