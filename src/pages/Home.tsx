@@ -5,7 +5,9 @@ export default function HomePage() {
   return (
     <>
       <H1>Homepage</H1>
-      <Link to="/register">Signup/Register</Link>
+      <Link to="/register" className="text-blue-800 underline">
+        Signup/Register
+      </Link>
     </>
   );
 }
