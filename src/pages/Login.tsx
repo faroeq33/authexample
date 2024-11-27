@@ -20,7 +20,7 @@ export default function Login() {
     formState: { errors },
   } = useForm<FormValues>({ mode: "onSubmit" });
   const navigate = useNavigate();
-  const { authToken, authExpiresIn } = useAuth();
+  const { setAuthToken, setAuthExpiresIn } = useAuth();
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -30,8 +30,8 @@ export default function Login() {
       );
 
       if (response.data.token) {
-        authToken(response.data.token);
-        authExpiresIn(response.data.expiresIn);
+        setAuthToken(response.data.token);
+        setAuthExpiresIn(response.data.expiresIn);
         navigate("/home");
       }
     } catch (error: unknown) {

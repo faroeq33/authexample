@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router";
 
 interface AuthContextType {
   token: string | null;
   expiresIn: number | null;
-  getToken: () => string | null;
+  getAuthToken: () => string | null;
   getTokenBearer: () => string;
-  authToken: (token: string) => void;
+  setAuthToken: (token: string) => void;
   Logout: () => void;
   /*
   	// Expires in not implemented in backend
@@ -17,20 +23,20 @@ interface AuthContextType {
   */
 }
 
-const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+export const AuthProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [token, setToken] = useState<string | null>(null);
   const [expiresIn, setExpiresIn] = useState<number | null>(null);
 
-  const authToken = (token: string) => {
+  const setAuthToken = (token: string) => {
     localStorage.setItem("token", token);
     setToken(token);
   };
 
-  const getToken = () => {
+  const getAuthToken = () => {
     const token = localStorage.getItem("token");
     setToken(token);
     return token;
@@ -65,8 +71,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         token,
         expiresIn,
-        getToken,
-        authToken,
+        getAuthToken,
+        setAuthToken,
         Logout,
         getTokenBearer,
         // authExpiresIn,// not implemented in backend
@@ -79,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useAuth = () => {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error("useAuth must be used within a AuthProvider");
   }
@@ -89,18 +95,19 @@ export const useAuth = () => {
 export function useRequireAuth(redirectUrl = "/login") {
   // This hook can be viewed as a middleware that checks if the user is authenticated
   const navigate = useNavigate();
-  const { getToken, getExpiresIn } = useAuth();
+  const authHandler = useAuth();
 
   useEffect(() => {
-    const expiresIn = getExpiresIn();
+    const expiresIn = authHandler.expiresIn;
     const isTokenExpired = expiresIn
       ? new Date().getTime() > new Date(Number(expiresIn)).getTime()
       : true;
-    const token = getToken();
+
+    const token = authHandler.token;
 
     if (!token || isTokenExpired) {
       navigate(redirectUrl);
       console.log("Redirecting to login not authenticated");
     }
-  }, [getToken, navigate, redirectUrl, getExpiresIn]);
+  }, [authHandler.token, navigate, redirectUrl, authHandler.expiresIn]);
 }
