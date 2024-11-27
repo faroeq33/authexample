@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { useAuth } from "../authentication/AuthHooks/useAuth";
 import globals from "../globals/globals";
 import { useState } from "react";
@@ -16,7 +16,6 @@ export default function Login() {
     formState: { errors },
   } = useForm<LoginRequest>({ mode: "onSubmit" });
 
-  const navigate = useNavigate();
   const authHandler = useAuth();
 
   const onSubmit = async (data: LoginRequest) => {
@@ -26,14 +25,21 @@ export default function Login() {
         data
       );
 
-      if (response.data.token) {
-        authHandler.setAuthToken(response.data.token);
-        authHandler.setAuthRefreshToken(response.data.refreshToken);
-        authHandler.setAuthExpiresIn(response.data.token);
-        console.log("Login successful");
-        setFormStatus("success");
-        navigate("/home");
+      // If the response does not contain a token, set an error
+      if (!response.data.token) {
+        setError("root.apiError", {
+          message: "Login failed, no token received",
+        });
+        return;
       }
+
+      // Set the token and refresh token in the auth handler
+      authHandler.setAuthToken(response.data.token);
+      authHandler.setAuthRefreshToken(response.data.refreshToken);
+      authHandler.setAuthExpiresIn(response.data.token);
+
+      console.log("Login successful");
+      setFormStatus("success");
     } catch (error: unknown) {
       console.error(error);
 
@@ -62,6 +68,7 @@ export default function Login() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-4"
       >
+        {formstatus}
         <input
           autoComplete="current-password"
           type="text"

@@ -10,7 +10,8 @@ import { AuthContextValues } from "./AuthContextValues";
 
 export type Token = string | null;
 
-type AuthContextType = ReturnType<typeof AuthContextValues>; // This way i don't have to repeat rename the type when changing the function name
+type AuthContextType = ReturnType<typeof AuthContextValues>; // This way i don't have to rename the type when changing the any function in AuthContextValues
+
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
