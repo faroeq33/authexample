@@ -1,7 +1,9 @@
+import H1 from "../ui/H1";
+
 export default function LogoutPage() {
   return (
     <>
-      <h1>loginpage</h1>
+      <H1>loginpage</H1>
     </>
   );
 }

@@ -59,7 +59,7 @@ export default function Login() {
     : "border-gray-300";
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-y-8 font-custom">
+    <>
       <span className="text-2xl text-gray-700">Login</span>
       {errors.root?.apiError && (
         <p className="text-red-500">{errors.root?.apiError.message}</p>
@@ -68,9 +68,14 @@ export default function Login() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-4"
       >
-        {formstatus}
+        {formstatus && (
+          <span className="text-green-500">
+            Login successfull, go to a protected route in order to see if it
+            works
+          </span>
+        )}
         <input
-          autoComplete="current-password"
+          autoComplete="username"
           type="text"
           {...register("username", {
             required: { value: true, message: "Wachtwoord is verplicht" },
@@ -109,7 +114,7 @@ export default function Login() {
           </span>
         </Link>
       </div>
-    </div>
+    </>
   );
 }
 

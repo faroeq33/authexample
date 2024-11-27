@@ -6,12 +6,18 @@ function Layout() {
   return (
     <>
       <header>
-        <H1>Auth Example App</H1>
-        <Nav />
+        <div className="p-4">
+          <H1>Auth Example App</H1>
+        </div>
+        <div className="flex gap-4">
+          <Nav />
+        </div>
       </header>
-      <main>
-        <Outlet />
-      </main>
+      <div className="flex flex-col items-center justify-center h-screen space-y-8 font-custom">
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </>
   );
 }
