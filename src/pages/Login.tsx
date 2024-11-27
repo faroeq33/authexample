@@ -1,51 +1,46 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../context/AuthContext";
-
-type FormValues = {
-  email: string;
-  password: string;
-  apiError?: {
-    message: string;
-  };
-};
+import { useAuth } from "../authentication/AuthHooks/useAuth";
+import globals from "../globals/globals";
+import { useState } from "react";
 
 export default function Login() {
+  const [formstatus, setFormStatus] = useState<string>("");
+
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<FormValues>({ mode: "onSubmit" });
-  const navigate = useNavigate();
-  const { setAuthToken, setAuthExpiresIn } = useAuth();
+  } = useForm<LoginRequest>({ mode: "onSubmit" });
 
-  const onSubmit = async (data: FormValues) => {
+  const navigate = useNavigate();
+  const authHandler = useAuth();
+
+  const onSubmit = async (data: LoginRequest) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
+      const response = await axios.post<LoginResponse>(
+        `${globals.API_URL}/auth/login`,
         data
       );
 
       if (response.data.token) {
-        setAuthToken(response.data.token);
-        setAuthExpiresIn(response.data.expiresIn);
+        authHandler.setAuthToken(response.data.token);
+        authHandler.setAuthRefreshToken(response.data.refreshToken);
+        authHandler.setAuthExpiresIn(response.data.token);
+        console.log("Login successful");
+        setFormStatus("success");
         navigate("/home");
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        if (error.response?.data == "Incorrect email or password") {
-          console.log("Incorrect email or password");
-          setError("root.apiError", { message: "Incorrect email or password" });
-        }
+      console.error(error);
 
-        if (error.response?.data == "Incorrect password") {
-          console.log("Incorrect password");
-          setError("password", { message: "Incorrect password" });
-        }
-      }
+      setError("root.apiError", {
+        message:
+          "Something went wrong, please try again later. See console.log for more details",
+      });
     }
   };
 
@@ -53,9 +48,6 @@ export default function Login() {
     ? "border-red-300 "
     : "border-gray-300";
 
-  const isErrorStyleEmail = errors.email
-    ? "border-red-300 "
-    : "border-gray-300";
   const isErrorStylePassword = errors.password
     ? "border-red-300 "
     : "border-gray-300";
@@ -71,17 +63,16 @@ export default function Login() {
         className="flex flex-col space-y-4"
       >
         <input
-          type="email"
-          id="email"
-          {...register("email", {
-            required: { value: true, message: "Email is verplicht" },
+          autoComplete="current-password"
+          type="text"
+          {...register("username", {
+            required: { value: true, message: "Wachtwoord is verplicht" },
           })}
-          placeholder="E-mail"
-          className={`w-72 h-12 px-4 text-lg border-2  rounded-custom focus:outline-none focus:border-blue-500 ${isErrorStyleEmail} ${isErrorIncorrectEmailOrPassword}`}
+          placeholder="Username"
+          className={`w-72 h-12 px-4 text-lg border-2  rounded-custom focus:outline-none focus:border-blue-500 ${isErrorStylePassword} ${isErrorIncorrectEmailOrPassword}`}
         />
-
-        {errors.email && (
-          <span className="text-red-500">{errors.email.message}</span>
+        {errors.password && (
+          <span className="text-red-500">{errors.password.message}</span>
         )}
         <input
           autoComplete="current-password"
@@ -103,8 +94,8 @@ export default function Login() {
           Login
         </button>
       </form>
-      <div>
-        Nog geen account?
+      <div className="flex flex-col">
+        <span>Nog geen account? </span>
         <Link to="/register">
           <span className="text-blue-500 cursor-pointer hover:underline">
             Registeer hier
@@ -114,3 +105,16 @@ export default function Login() {
     </div>
   );
 }
+
+type LoginRequest = {
+  username: string;
+  password: string;
+  apiError?: {
+    message: string;
+  };
+};
+
+type LoginResponse = {
+  token: string;
+  refreshToken: string;
+};

@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 import { Link, useNavigate } from "react-router";
-
+import globals from "../globals/globals";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import H1 from "../ui/H1";
@@ -18,18 +18,18 @@ export default function Register() {
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/register`,
+        `${globals.API_URL}/auth/register`,
         data
       );
-      console.log(response.status);
-      if (response.status === 201) {
+      console.log(response);
+      if (response.status === 200 || response.status === 201) {
         console.log("Succesvol geregistreerd");
         navigate("/login");
       }
     } catch (error) {
       console.error(error);
       setError("root.apiError", {
-        message: "Er is een netwerkfout opgetreden. Probeer het later opnieuw.",
+        message: `${error}`,
       });
     }
   };
@@ -49,6 +49,15 @@ export default function Register() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-4"
       >
+        <input
+          className="border"
+          type="text"
+          {...register("role", {
+            required: { value: true, message: "Email is verplicht" },
+          })}
+          placeholder="TeamHr"
+        />
+
         <input
           className="border"
           type="text"
@@ -114,6 +123,7 @@ const formstyles: CSSProperties = {
 };
 
 type FormValues = {
+  role: string;
   username: string;
   email: string;
   password: string;
