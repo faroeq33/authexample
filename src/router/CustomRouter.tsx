@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import Layout from "../layouts/Layout";
 import HomePage from "../pages/Home";
 import RegisterPage from "../pages/Register";
 import LoginPage from "../pages/Login";
 import ProtectedPage from "../pages/ProtectedPage";
-import Layout from "../layouts/Layout";
 import LogoutPage from "../pages/Logout";
-import { ROUTES } from "../globals/globals";
 import Unauthorized from "../pages/Unauthorized";
+import { ROUTES } from "../globals/globals";
 
 export default function CustomRouter() {
   return (
