@@ -14,7 +14,7 @@ function Layout() {
           <Nav />
         </div>
       </header>
-      <div className="container mx-auto mt-4">
+      <div className="container pt-4 mx-auto">
         <div className="flex justify-center w-full h-screen space-y-8 font-custom">
           <main className="w-full ">
             <Spacer>

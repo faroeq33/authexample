@@ -16,8 +16,8 @@ function Nav() {
   ];
 
   return (
-    <nav>
-      <ul className="flex items-center justify-center gap-4">
+    <nav className="w-full py-4 bg-blue-200">
+      <ul className="flex items-center justify-center gap-4 text-2xl">
         {menuItems.map(({ path, name }, index) => (
           <Link to={path} key={index}>
             <NavItem>{name}</NavItem>

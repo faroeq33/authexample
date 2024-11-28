@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
+  @apply bg-stone-100;
   font-family: "Roboto ", sans-serif;
 }

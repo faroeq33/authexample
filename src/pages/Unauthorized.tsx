@@ -1,17 +1,17 @@
 import { Link } from "react-router";
-import H1 from "../ui/H1";
-import LinkStyle from "../ui/LinkStyle";
 
 export default function Unauthorized() {
   return (
     <>
-      <H1>
-        Unauthorized,{" "}
-        <Link to="/login">
-          <LinkStyle>Sign in </LinkStyle>
-        </Link>
-        to see this route
-      </H1>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold">
+          You're not authorized to see this page <br />
+          <Link to="/login" className="text-2xl">
+            <span className="text-2xl text-blue-500">Sign in </span>
+            to see this route
+          </Link>
+        </h1>
+      </div>
     </>
   );
 }

@@ -47,7 +47,7 @@ export default function Register() {
         <H1>Registeren</H1>
 
         <input
-          className="border"
+          className="h-12 px-4 text-lg border-2 w-72 rounded-custom focus:outline-none focus:border-blue-500"
           autoComplete="role"
           type="text"
           {...register("role", {
@@ -58,7 +58,7 @@ export default function Register() {
         {errors.username && <span>{errors.username?.message}</span>}
 
         <input
-          className="border"
+          className="h-12 px-4 text-lg border-2 w-72 rounded-custom focus:outline-none focus:border-blue-500"
           type="text"
           autoComplete="username"
           id="username"
@@ -70,7 +70,7 @@ export default function Register() {
 
         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <input
-          className="border"
+          className="h-12 px-4 text-lg border-2 w-72 rounded-custom focus:outline-none focus:border-blue-500"
           type="email"
           autoComplete="email"
           id="email"
@@ -83,7 +83,7 @@ export default function Register() {
         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
 
         <input
-          className="border"
+          className="h-12 px-4 text-lg border-2 w-72 rounded-custom focus:outline-none focus:border-blue-500"
           autoComplete="current-password"
           id="password"
           type="password"
@@ -100,7 +100,7 @@ export default function Register() {
           Registeer
         </button>
       </CustomForm>
-      <div>
+      <div className="mt-2">
         Al een account?{" "}
         <Link to="/login">
           <LinkStyle>Log hier in</LinkStyle>

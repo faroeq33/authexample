@@ -1,9 +1,9 @@
-import H1 from "../ui/H1";
-
 export default function LogoutPage() {
   return (
     <>
-      <H1>You've been logged out.</H1>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold"> You've been logged out.</h1>
+      </div>
     </>
   );
 }

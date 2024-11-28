@@ -97,7 +97,7 @@ export default function Login() {
             required: { value: true, message: "Wachtwoord is verplicht" },
           })}
           placeholder="Wachtwoord"
-          className={`w-72 h-12 px-4 text-lg border-2  rounded-custom focus:outline-none focus:border-blue-500 ${isErrorStylePassword} ${isErrorIncorrectEmailOrPassword}`}
+          className={`w-72 h-12 px-4 text-lg border-2 rounded-custom focus:outline-none focus:border-blue-500 ${isErrorStylePassword} ${isErrorIncorrectEmailOrPassword}`}
         />
         {errors.password && (
           <span className="text-red-500">{errors.password.message}</span>
