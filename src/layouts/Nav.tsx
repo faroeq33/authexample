@@ -1,39 +1,26 @@
 import { Link } from "react-router";
-import { ROUTES } from "../router/CustomRouter";
 import { useAuth } from "../authentication/AuthHooks/useAuth";
 import { PropsWithChildren } from "react";
+import { ROUTES } from "../globals/globals";
 
 function Nav() {
   const authHandler = useAuth();
 
-  const fields = [
-    {
-      name: "Home",
-      path: ROUTES.home,
-    },
-    {
-      name: "register",
-      path: ROUTES.register,
-    },
-    {
-      name: "login",
-      path: ROUTES.login,
-    },
-    {
-      name: "logout",
-      path: ROUTES.logout,
-    },
-    {
-      name: "protected",
-      path: ROUTES.logout,
-    },
+  const menuItems = [
+    ROUTES.home,
+    ROUTES.register,
+    ROUTES.login,
+    ROUTES.logout,
+    ROUTES.protected,
+    ROUTES.unauthorized,
   ];
+
   return (
     <nav>
       <ul className="flex items-center justify-center gap-4">
-        {fields.map((field, index) => (
+        {menuItems.map(({ path, name }, index) => (
           <NavItem key={index}>
-            <Link to={field.path}>{field.name}</Link>
+            <Link to={path}>{name}</Link>
           </NavItem>
         ))}
 

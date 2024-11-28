@@ -1,9 +1,10 @@
+import axios from "axios";
 import { CSSProperties } from "react";
 import { Link, useNavigate } from "react-router";
-import globals from "../globals/globals";
-import axios from "axios";
 import { useForm } from "react-hook-form";
+import { API_URL } from "../globals/globals";
 import H1 from "../ui/H1";
+import LinkStyle from "../ui/LinkStyle";
 
 export default function Register() {
   const {
@@ -17,10 +18,7 @@ export default function Register() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await axios.post(
-        `${globals.API_URL}/auth/register`,
-        data
-      );
+      const response = await axios.post(`${API_URL}/auth/register`, data);
       console.log(response);
       if (response.status === 200 || response.status === 201) {
         console.log("Succesvol geregistreerd");
@@ -106,9 +104,7 @@ export default function Register() {
       <div>
         Al een account?{" "}
         <Link to="/login">
-          <span className="text-blue-500 cursor-pointer hover:underline">
-            Log hier in
-          </span>
+          <LinkStyle>Log hier in</LinkStyle>
         </Link>
       </div>
     </div>

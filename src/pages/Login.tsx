@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 
 import { Link } from "react-router";
 import { useAuth } from "../authentication/AuthHooks/useAuth";
-import globals from "../globals/globals";
+import { API_URL } from "../globals/globals";
 import { useState } from "react";
+import LinkStyle from "../ui/LinkStyle";
 
 export default function Login() {
   const [formstatus, setFormStatus] = useState<string>("");
@@ -21,7 +22,7 @@ export default function Login() {
   const onSubmit = async (data: LoginRequest) => {
     try {
       const response = await axios.post<LoginResponse>(
-        `${globals.API_URL}/auth/login`,
+        `${API_URL}/auth/login`,
         data
       );
 
@@ -109,9 +110,7 @@ export default function Login() {
       <div className="flex flex-col">
         <span>Nog geen account? </span>
         <Link to="/register">
-          <span className="text-blue-500 cursor-pointer hover:underline">
-            Registeer hier
-          </span>
+          <LinkStyle>Registeer hier</LinkStyle>
         </Link>
       </div>
     </>
