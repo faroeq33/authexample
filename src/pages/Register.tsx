@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { API_URL } from "../globals/globals";
 import H1 from "../ui/H1";
 import LinkStyle from "../ui/LinkStyle";
+import FormField from "../ui/FormField";
 
 export default function Register() {
   const {
@@ -47,7 +48,7 @@ export default function Register() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-4"
       >
-        <input
+        <FormField
           className="border"
           type="text"
           {...register("role", {

@@ -19,9 +19,9 @@ function Nav() {
     <nav>
       <ul className="flex items-center justify-center gap-4">
         {menuItems.map(({ path, name }, index) => (
-          <NavItem key={index}>
-            <Link to={path}>{name}</Link>
-          </NavItem>
+          <Link to={path}>
+            <NavItem key={index}>{name}</NavItem>
+          </Link>
         ))}
 
         <NavItem>

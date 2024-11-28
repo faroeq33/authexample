@@ -13,10 +13,12 @@ function Layout() {
           <Nav />
         </div>
       </header>
-      <div className="flex flex-col items-center justify-center h-screen space-y-8 font-custom">
-        <main>
-          <Outlet />
-        </main>
+      <div className="container mx-auto mt-4">
+        <div className="flex justify-center h-screen space-y-8 font-custom">
+          <main>
+            <Outlet />
+          </main>
+        </div>
       </div>
     </>
   );
