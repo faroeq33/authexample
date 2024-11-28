@@ -1,11 +1,11 @@
 import axios from "axios";
-import { CSSProperties } from "react";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { API_URL } from "../globals/globals";
 import H1 from "../ui/H1";
 import LinkStyle from "../ui/LinkStyle";
-import FormField from "../ui/FormField";
+import CustomForm from "../ui/form/CustomForm";
+import ErrorMessage from "../ui/messages/ErrorMessage";
 
 export default function Register() {
   const {
@@ -34,8 +34,7 @@ export default function Register() {
   };
 
   return (
-    <div style={formstyles}>
-      <H1>Registeren</H1>
+    <>
       <div>
         <div>
           {errors.root?.apiError && <p>{errors.root?.apiError.message}</p>}
@@ -44,22 +43,24 @@ export default function Register() {
         </div>
       </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-4"
-      >
-        <FormField
+      <CustomForm onSubmit={handleSubmit(onSubmit)}>
+        <H1>Registeren</H1>
+
+        <input
           className="border"
+          autoComplete="role"
           type="text"
           {...register("role", {
-            required: { value: true, message: "Email is verplicht" },
+            required: { value: true, message: "Rol is verplicht" },
           })}
           placeholder="TeamHr"
         />
+        {errors.username && <span>{errors.username?.message}</span>}
 
         <input
           className="border"
           type="text"
+          autoComplete="username"
           id="username"
           {...register("username", {
             required: { value: true, message: "Email is verplicht" },
@@ -67,10 +68,11 @@ export default function Register() {
           placeholder="Naam"
         />
 
-        <div>{errors.username && <span>Naam is verplicht</span>}</div>
+        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <input
           className="border"
           type="email"
+          autoComplete="email"
           id="email"
           {...register("email", {
             required: { value: true, message: "Email is verplicht" },
@@ -78,15 +80,11 @@ export default function Register() {
           placeholder="E-mail"
         />
 
-        <div>
-          {errors.email && (
-            <span className="text-red-500">Email is verplicht</span>
-          )}
-        </div>
+        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
 
         <input
           className="border"
-          autoComplete="new-password"
+          autoComplete="current-password"
           id="password"
           type="password"
           {...register("password", {
@@ -101,23 +99,16 @@ export default function Register() {
         >
           Registeer
         </button>
-      </form>
+      </CustomForm>
       <div>
         Al een account?{" "}
         <Link to="/login">
           <LinkStyle>Log hier in</LinkStyle>
         </Link>
       </div>
-    </div>
+    </>
   );
 }
-
-const formstyles: CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "1rem",
-  margin: "1rem",
-};
 
 type FormValues = {
   role: string;

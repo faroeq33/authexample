@@ -6,6 +6,9 @@ import { useAuth } from "../authentication/AuthHooks/useAuth";
 import { API_URL } from "../globals/globals";
 import { useState } from "react";
 import LinkStyle from "../ui/LinkStyle";
+import H1 from "../ui/H1";
+import CustomForm from "../ui/form/CustomForm";
+import ErrorMessage from "../ui/messages/ErrorMessage";
 
 export default function Login() {
   const [formstatus, setFormStatus] = useState<string>("");
@@ -61,31 +64,30 @@ export default function Login() {
 
   return (
     <>
-      <span className="text-2xl text-gray-700">Login</span>
       {errors.root?.apiError && (
         <p className="text-red-500">{errors.root?.apiError.message}</p>
       )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-4"
-      >
+      <CustomForm onSubmit={handleSubmit(onSubmit)}>
         {formstatus && (
           <span className="text-green-500">
             Login successfull, go to a protected route in order to see if it
             works
           </span>
         )}
+        <H1>Login</H1>
+
         <input
+          id="username"
           autoComplete="username"
           type="text"
           {...register("username", {
-            required: { value: true, message: "Wachtwoord is verplicht" },
+            required: { value: true, message: "*" },
           })}
           placeholder="Username"
           className={`w-72 h-12 px-4 text-lg border-2  rounded-custom focus:outline-none focus:border-blue-500 ${isErrorStylePassword} ${isErrorIncorrectEmailOrPassword}`}
         />
-        {errors.password && (
-          <span className="text-red-500">{errors.password.message}</span>
+        {errors.username && (
+          <ErrorMessage>{errors.username.message}</ErrorMessage>
         )}
         <input
           autoComplete="current-password"
@@ -106,9 +108,9 @@ export default function Login() {
         >
           Login
         </button>
-      </form>
-      <div className="flex flex-col">
-        <span>Nog geen account? </span>
+      </CustomForm>
+      <div className="flex flex-col mt-2">
+        <span className="text-gray-700">Nog geen account? </span>
         <Link to="/register">
           <LinkStyle>Registeer hier</LinkStyle>
         </Link>

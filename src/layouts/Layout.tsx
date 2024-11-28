@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Nav from "./Nav";
 import H1 from "../ui/H1";
+import Spacer from "../ui/Spacer";
 
 function Layout() {
   return (
@@ -14,9 +15,11 @@ function Layout() {
         </div>
       </header>
       <div className="container mx-auto mt-4">
-        <div className="flex justify-center h-screen space-y-8 font-custom">
-          <main>
-            <Outlet />
+        <div className="flex justify-center w-full h-screen space-y-8 font-custom">
+          <main className="w-full ">
+            <Spacer>
+              <Outlet />
+            </Spacer>
           </main>
         </div>
       </div>
