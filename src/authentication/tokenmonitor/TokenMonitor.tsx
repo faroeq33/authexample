@@ -1,4 +1,12 @@
-import { getAllLocalStorageItems } from "./getAllLocalStorageItems";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@/components/ui/table";
+import getAllLocalStorageItems from "./getAllLocalStorageItems";
 
 function TokenMonitor() {
   // Get token from local storage
@@ -6,16 +14,24 @@ function TokenMonitor() {
 
   const allItems = getAllLocalStorageItems();
   return (
-    <div className="fixed bg-pink-500 bottom-4 right-4">
+    <div className="fixed bottom-4 right-4 bg-stone-200">
       <div>
-        <h3>All Local Storage Items:</h3>
-        <ul>
-          {allItems.map((item) => (
-            <li key={item.key}>
-              {item.key}: {item.value}
-            </li>
-          ))}
-        </ul>
+        <Table>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHead>
+            <span className="w-full text-2xl text-right">
+              All Local Storage Items:
+            </span>
+          </TableHead>
+          <TableBody>
+            {allItems.map((item) => (
+              <TableRow key={item.key}>
+                <TableCell className="font-bold">{item.key}</TableCell>
+                <TableCell className="text-right">{item.value}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

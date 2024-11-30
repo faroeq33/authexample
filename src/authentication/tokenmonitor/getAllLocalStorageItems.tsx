@@ -8,8 +8,13 @@
  * @returns {Array<{ key: string, value: string | null }>} An array of objects,
  * each containing a key and its corresponding value from the local storage.
  */
-export function getAllLocalStorageItems() {
-  const items = [];
+interface LocalStorageItem {
+  key: string;
+  value: string | null;
+}
+
+export default function getAllLocalStorageItems(): LocalStorageItem[] {
+  const items: LocalStorageItem[] = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (key) {
