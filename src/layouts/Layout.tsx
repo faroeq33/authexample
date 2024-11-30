@@ -18,7 +18,7 @@ function Layout() {
       <div className="container pt-4 mx-auto">
         <div className="flex justify-center w-full h-screen space-y-8 font-custom">
           <main className="w-full ">
-            <TokenMonitor />
+            {process.env.NODE_ENV !== "production" ? <TokenMonitor /> : null}
             <Spacer>
               <Outlet />
             </Spacer>
