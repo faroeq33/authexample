@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { PropsWithChildren } from "react";
 import { ROUTES } from "../globals/globals";
+import { useAuth } from "@/authentication/authhooks/useAuth";
 
 function Nav() {
   const authHandler = useAuth();
