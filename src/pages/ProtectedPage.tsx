@@ -1,5 +1,5 @@
-import { useAuth } from "../authentication/AuthHooks/useAuth";
-import useRequireAuth from "../authentication/AuthHooks/useRequireAuth";
+import { useAuth } from "../authentication/authhooks/useAuth";
+import useRequireAuth from "../authentication/authhooks/useRequireAuth";
 
 function ProtectedPage() {
   useRequireAuth(); // Add this line to require authentication

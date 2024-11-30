@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from "react";
+import React, { createContext, FC, ReactNode, useState } from "react";
 
 import { AuthContextValues } from "./AuthContextValues";
 
@@ -11,9 +11,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
-export const AuthProvider: FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [token] = useState<Token>(null);
   // const [expiresIn, setExpiresIn] = useState<number | null>(null);
 

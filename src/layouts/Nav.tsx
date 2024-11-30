@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { useAuth } from "../authentication/AuthHooks/useAuth";
 import { PropsWithChildren } from "react";
 import { ROUTES } from "../globals/globals";
 

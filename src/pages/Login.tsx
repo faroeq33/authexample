@@ -2,7 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 
 import { Link } from "react-router";
-import { useAuth } from "../authentication/AuthHooks/useAuth";
+import { useAuth } from "../authentication/authhooks/useAuth";
 import { API_URL } from "../globals/globals";
 import { useState } from "react";
 import LinkStyle from "../ui/LinkStyle";
