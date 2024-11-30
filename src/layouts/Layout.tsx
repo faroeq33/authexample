@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Nav from "./Nav";
 import H1 from "../ui/H1";
 import Spacer from "../ui/Spacer";
+import TokenMonitor from "../authentication/tokenmonitor/TokenMonitor";
 
 function Layout() {
   return (
@@ -17,6 +18,7 @@ function Layout() {
       <div className="container pt-4 mx-auto">
         <div className="flex justify-center w-full h-screen space-y-8 font-custom">
           <main className="w-full ">
+            <TokenMonitor />
             <Spacer>
               <Outlet />
             </Spacer>
