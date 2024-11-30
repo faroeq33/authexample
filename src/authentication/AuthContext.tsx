@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  // Dispatch,
-  FC,
-  // SetStateAction,
-  useState,
-} from "react";
+import React, { createContext, FC, useState } from "react";
 
 import { AuthContextValues } from "./AuthContextValues";
 
@@ -12,6 +6,7 @@ export type Token = string | null;
 
 type AuthContextType = ReturnType<typeof AuthContextValues>; // This way i don't have to rename the type when changing the any function in AuthContextValues
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );

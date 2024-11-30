@@ -34,12 +34,7 @@ function useRequireAuth(redirectUrl = ROUTES.unauthorized.path) {
       navigate(redirectUrl);
       console.log("Redirecting to login not authenticated");
     }
-  }, [
-    navigate,
-    redirectUrl,
-    authHandler.getAuthToken(),
-    authHandler.getAuthExpiresIn(),
-  ]);
+  }, [authHandler, navigate, redirectUrl]);
 }
 
 /**
