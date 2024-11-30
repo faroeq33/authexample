@@ -25,7 +25,7 @@ function useRequireAuth(redirectUrl = ROUTES.unauthorized.path) {
 
   useEffect(() => {
     const expiresIn = authHandler.getAuthExpiresIn();
-    const tokenExpired = isTokenExpired(expiresIn);
+    const tokenExpired = isTokenExpired(expiresIn.toString());
 
     const token = authHandler.getAuthToken();
 
