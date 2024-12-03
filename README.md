@@ -1,5 +1,5 @@
 # React JWT Auth Example
-This project serves an example to incorporate jwt token authentication in a React app. Also for integrating frontends to our backend(AllYourGoods API)
+This project serves as an example to incorporate jwt token authentication in a React app. Also for integrating frontends to our backend(AllYourGoods API)
 
 ![alt text](public/auth-clientside.png)
 
