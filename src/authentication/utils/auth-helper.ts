@@ -40,6 +40,8 @@ const getAuthExpiresIn = () => {
   return expiresIn ? parseInt(expiresIn) : null;
 };
 
+const loggedIn = () => localStorage.getItem("token") !== null;
+
 const getAuthHelperMethods = () => {
   return {
     getAuthToken,
@@ -52,6 +54,7 @@ const getAuthHelperMethods = () => {
 };
 
 export {
+  loggedIn,
   getAuthToken,
   setAuthToken,
   setAuthRefreshToken,

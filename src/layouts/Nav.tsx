@@ -1,37 +1,47 @@
 import { Link } from "react-router";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { ROUTES } from "../globals/globals";
 import { useAuth } from "@/authentication/authhooks/useAuth";
+import { loggedIn } from "@/authentication/utils/auth-helper";
 
 function Nav() {
-  const authHandler = useAuth();
-
-  const menuItems = [
+  const authRoutes = [
     ROUTES.home,
     ROUTES.register,
     ROUTES.login,
-    ROUTES.logout,
     ROUTES.protected,
-    ROUTES.unauthorized,
   ];
+
+  const guestRoutes = [ROUTES.home, ROUTES.register, ROUTES.login];
+
+  const authHandler = useAuth();
+  const defaultState = loggedIn() ? authRoutes : guestRoutes;
+  const [routes, setRoutes] = useState(defaultState);
+
+  const handleLogout = () => {
+    authHandler.logout();
+    setRoutes(authRoutes);
+  };
 
   return (
     <nav className="w-full py-4 bg-blue-200">
       <ul className="flex items-center justify-center gap-4 text-2xl">
-        {menuItems.map(({ path, name }, index) => (
+        {routes.map(({ path, name }, index) => (
           <Link to={path} key={index}>
             <NavItem>{name}</NavItem>
           </Link>
         ))}
 
-        <NavItem>
-          <button
-            className="text-blue-500 hover:underline"
-            onClick={() => authHandler.logout()}
-          >
-            Logout!
-          </button>
-        </NavItem>
+        {loggedIn() && (
+          <NavItem>
+            <button
+              className="text-blue-500 hover:underline"
+              onClick={handleLogout}
+            >
+              Logout!
+            </button>
+          </NavItem>
+        )}
       </ul>
     </nav>
   );
