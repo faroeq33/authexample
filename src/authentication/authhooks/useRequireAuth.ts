@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import { useAuth } from "./useAuth";
-import { ROUTES } from "../../globals/globals";
+import { getAuthExpiresIn, getAuthToken } from "../utils/auth-helper";
 
 /**
  * Custom hook that ensures the user is authenticated. If the user is not authenticated,
@@ -19,22 +18,21 @@ import { ROUTES } from "../../globals/globals";
  * };
  * ```
  */
-function useRequireAuth(redirectUrl = ROUTES.unauthorized.path) {
+function useRequireAuth(redirectUrl = "/") {
   const navigate = useNavigate();
-  const authHandler = useAuth();
 
   useEffect(() => {
-    const expiresIn = authHandler.getAuthExpiresIn();
+    const expiresIn = getAuthExpiresIn();
     const tokenExpired = isTokenExpired(expiresIn.toString());
 
-    const token = authHandler.getAuthToken();
+    const token = getAuthToken();
 
     // If there is no token or the token has expired, redirect to the login page
     if (!token || tokenExpired) {
       navigate(redirectUrl);
       console.log("Redirecting to login not authenticated");
     }
-  }, [authHandler, navigate, redirectUrl]);
+  }, [navigate, redirectUrl]);
 }
 
 /**
