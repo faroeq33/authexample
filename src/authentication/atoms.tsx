@@ -1,4 +1,4 @@
-import { authRoutes, guestRoutes } from "@/globals/globals";
+import { AUTHROUTES, GUESTROUTES } from "@/globals/globals";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { loggedIn } from "./auth-utils";
@@ -14,7 +14,7 @@ export const refreshTokenAtom = atomWithStorage<string | null>(
 );
 
 // Routing ________________________________________________________________
-const defaultState = loggedIn() ? authRoutes : guestRoutes;
+const defaultState = loggedIn() ? AUTHROUTES : GUESTROUTES;
 export const routesAtom = atom(defaultState);
 
 // Example ________________________________________________________________

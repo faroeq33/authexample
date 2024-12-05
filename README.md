@@ -22,10 +22,10 @@ In the current state of the api you do not get an expiry time of the token immed
   - State is secure but it will be lost when the page is refreshed.
 
 # Example with a react app
-In this application we use Context to provide the token to childcomponents. The tokens are stored in local storage. The token is removed from the local storage when the user logs out.
+In this application we use Jotai to share tokens to childcomponents. The tokens are stored in local storage & synchronised with state. The token is removed from the local storage when the user logs out.
 
 ## Overview of the components
-- **AuthContext.tsx**: provides token to childcomponents.
+- **src/authentication/atoms.tsx**: provides tokens to childcomponents.
 	- Responsible for
     	- Signing in and out by storing or removing token from local storage
 		- Providing the token to the components

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link } from "react-router";
 import { PropsWithChildren } from "react";
-import { guestRoutes, ROUTES } from "../globals/globals";
+import { GUESTROUTES, ROUTES } from "../globals/globals";
 import { useAtom } from "jotai";
 import {
   accessTokenAtom,
@@ -17,7 +17,7 @@ function Nav() {
   const handleLogout = () => {
     setAccToken("");
     setRefrToken("");
-    setRoutes(guestRoutes);
+    setRoutes(GUESTROUTES);
   };
 
   return (

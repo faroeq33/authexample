@@ -3,7 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 
 import { Link } from "react-router";
-import { API_URL, authRoutes } from "../globals/globals";
+import { API_URL, AUTHROUTES } from "../globals/globals";
 import { useState } from "react";
 import LinkStyle from "../ui/LinkStyle";
 import H1 from "../ui/H1";
@@ -50,7 +50,7 @@ export default function Login() {
 
       setAccessToken(response.data.token);
       setRefreshToken(response.data.refreshToken);
-      setRoutes(authRoutes);
+      setRoutes(AUTHROUTES);
 
       console.log("Login successful");
       setFormStatus("success");
