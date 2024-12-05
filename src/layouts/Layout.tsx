@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
-import Nav from "./Nav";
 import H1 from "../ui/H1";
 import Spacer from "../ui/Spacer";
-import TokenMonitor from "../authentication/tokenmonitor/TokenMonitor";
+import TokenMonitor from "@/authentication/tokenmonitor";
+import Nav from "./Nav";
 
 function Layout() {
   return (

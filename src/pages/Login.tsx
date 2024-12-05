@@ -1,17 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
 import { Link } from "react-router";
-import { useAuth } from "../authentication/authhooks/useAuth";
-import { API_URL } from "../globals/globals";
+import { API_URL, authRoutes } from "../globals/globals";
 import { useState } from "react";
 import LinkStyle from "../ui/LinkStyle";
 import H1 from "../ui/H1";
 import CustomForm from "../ui/form/CustomForm";
 import ErrorMessage from "../ui/messages/ErrorMessage";
+import { useAtom } from "jotai";
+import {
+  accessTokenAtom,
+  refreshTokenAtom,
+  routesAtom,
+} from "@/authentication/atoms";
 
 export default function Login() {
   const [formstatus, setFormStatus] = useState<string>("");
+  const [accToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [refrToken, setRefreshToken] = useAtom(refreshTokenAtom);
+  const [routes, setRoutes] = useAtom(routesAtom);
 
   const {
     register,
@@ -20,7 +29,7 @@ export default function Login() {
     formState: { errors },
   } = useForm<LoginRequest>({ mode: "onSubmit" });
 
-  const authHandler = useAuth();
+  // const authHandler = useAuth();
 
   const onSubmit = async (data: LoginRequest) => {
     try {
@@ -38,9 +47,10 @@ export default function Login() {
       }
 
       // Set the token and refresh token in the auth handler
-      authHandler.setAuthToken(response.data.token);
-      authHandler.setAuthRefreshToken(response.data.refreshToken);
-      authHandler.setAuthExpiresIn(response.data.token);
+
+      setAccessToken(response.data.token);
+      setRefreshToken(response.data.refreshToken);
+      setRoutes(authRoutes);
 
       console.log("Login successful");
       setFormStatus("success");
@@ -67,8 +77,9 @@ export default function Login() {
       {errors.root?.apiError && (
         <p className="text-red-500">{errors.root?.apiError.message}</p>
       )}
+
       <CustomForm onSubmit={handleSubmit(onSubmit)}>
-        {formstatus && (
+        {formstatus === "success" && (
           <span className="text-green-500">
             Login successfull, go to a protected route in order to see if it
             works

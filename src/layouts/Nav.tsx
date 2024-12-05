@@ -1,25 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link } from "react-router";
-import { PropsWithChildren, useState } from "react";
-import { ROUTES } from "../globals/globals";
-import { useAuth } from "@/authentication/authhooks/useAuth";
-import { loggedIn } from "@/authentication/utils/auth-helper";
+import { PropsWithChildren } from "react";
+import { guestRoutes, ROUTES } from "../globals/globals";
+import { useAtom } from "jotai";
+import {
+  accessTokenAtom,
+  refreshTokenAtom,
+  routesAtom,
+} from "@/authentication/atoms";
 
 function Nav() {
-  const authRoutes = [
-    ROUTES.home,
-    ROUTES.register,
-    ROUTES.logout,
-    ROUTES.protected,
-  ];
-
-  const guestRoutes = [ROUTES.home, ROUTES.register, ROUTES.login];
-
-  const authHandler = useAuth();
-  const defaultState = loggedIn() ? authRoutes : guestRoutes;
-  const [routes, setRoutes] = useState(defaultState);
+  const [aToken, setAccToken] = useAtom(accessTokenAtom);
+  const [rToken, setRefrToken] = useAtom(refreshTokenAtom);
+  const [routes, setRoutes] = useAtom(routesAtom);
 
   const handleLogout = () => {
-    authHandler.logout();
+    setAccToken("");
+    setRefrToken("");
     setRoutes(guestRoutes);
   };
 
@@ -27,7 +24,7 @@ function Nav() {
     <nav className="w-full py-4 bg-blue-200">
       <ul className="flex items-center justify-center gap-4 text-2xl">
         {routes.map(({ path, name }, index) => (
-          <>
+          <span key={index}>
             {name == ROUTES.logout.name ? (
               <NavItem>
                 <button
@@ -38,11 +35,11 @@ function Nav() {
                 </button>
               </NavItem>
             ) : (
-              <Link to={path} key={index}>
+              <Link to={path}>
                 <NavItem>{name}</NavItem>
               </Link>
             )}
-          </>
+          </span>
         ))}
       </ul>
     </nav>

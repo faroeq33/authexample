@@ -8,3 +8,7 @@ export const ROUTES = {
 };
 
 export const API_URL = "https://ayga-api-test-1-app.azurewebsites.net/api";
+
+export const authRoutes = [ROUTES.home, ROUTES.logout, ROUTES.protected];
+
+export const guestRoutes = [ROUTES.home, ROUTES.register, ROUTES.login];

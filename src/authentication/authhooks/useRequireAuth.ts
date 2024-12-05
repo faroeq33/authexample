@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import { getAuthExpiresIn, getAuthToken } from "../utils/auth-helper";
+import { getAuthExpiresIn, getAuthToken } from "../auth-utils";
 
 /**
  * Custom hook that ensures the user is authenticated. If the user is not authenticated,
@@ -18,12 +18,12 @@ import { getAuthExpiresIn, getAuthToken } from "../utils/auth-helper";
  * };
  * ```
  */
-function useRequireAuth(redirectUrl = "/") {
+function useRequireAuth(redirectUrl = "/login") {
   const navigate = useNavigate();
 
   useEffect(() => {
     const expiresIn = getAuthExpiresIn();
-    const tokenExpired = isTokenExpired(expiresIn.toString());
+    const tokenExpired = isTokenExpired(expiresIn?.toString());
 
     const token = getAuthToken();
 
